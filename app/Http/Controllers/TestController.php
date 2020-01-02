@@ -44,6 +44,7 @@ class TestController extends Controller
             'timestamp'=>$timestamp,
             'version'=>$version,
             'notify_url'=>$notify_url,
+            'return_url'=>$return_url,
             'biz_content'=>json_encode($request_param)
         ];
 //
@@ -75,6 +76,7 @@ class TestController extends Controller
         }
         $param_str=rtrim($param_str,'&');
         $url = $ali_geteway . $param_str;
+//        echo $url;die;
         header("Location:".$url);
 
 
