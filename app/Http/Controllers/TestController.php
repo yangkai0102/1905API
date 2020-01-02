@@ -26,7 +26,7 @@ class TestController extends Controller
         //请求参数
         $out_trade_no=time() . rand(1111,9999);      //商户订单号
         $product_code='FAST_INSTANT_TRADE_PAY';
-        $total_amount=90000000;
+        $total_amount=10000;
         $subject='海景豪华别墅' . $out_trade_no;
 
         $request_param=[
