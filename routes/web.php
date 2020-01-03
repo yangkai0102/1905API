@@ -19,3 +19,11 @@ Route::get('/test/pay','TestController@alipay');
 Route::get('/test/alipay/return','Alipay\PayController@aliReturn');
 Route::post('/test/alipay/notify','Alipay\PayController@notify');
 
+
+//注册
+Route::post('/test/reg','Api\TestController@reg');
+Route::post('/test/login','Api\TestController@login');                          //登录
+Route::get('/test/list','Api\TestController@userList')->middleware('filter');  //用户列表
+
+
+
