@@ -79,10 +79,44 @@ class TestController extends Controller
 //        echo $url;die;
         header("Location:".$url);
 
+    }
 
 
+    public function asscii(){
+        $a='yangkai';
+        $length=strlen($a);
+        echo $length;echo '</br>';
 
+        $pass='';
+        for($i=0;$i<$length;$i++){
+            echo $a[$i] . '>>>' .ord($a[$i]);echo '</br>';
+            $ord=ord($a[$i])+3;
+            $chr=chr($ord);
+            echo $a[$i] . '>>>' . $ord . '>>>' .$chr;echo '<hr>';
 
+            $pass .=$chr;
+        }
+        echo "加密：".$pass;
+
+    }
+
+    public function dec(){
+        $enc='|dqjndl';
+        echo "密文：".$enc;echo '<hr>';
+
+        $length=strlen($enc);
+        $str='';
+        for ($i=0;$i<$length;$i++){
+//            echo $i;echo "</br>";
+
+            $ord=ord($enc[$i])-3;
+            echo $ord;echo "</br>";
+            $chr=chr($ord);
+            echo $chr;echo '</br>';
+            $str .=$chr;
+        }
+
+        echo "解密：".$str;
 
     }
 }

@@ -25,5 +25,13 @@ Route::post('/test/reg','Api\TestController@reg');
 Route::post('/test/login','Api\TestController@login');                          //登录
 Route::get('/test/list','Api\TestController@userList')->middleware('filter');  //用户列表
 
+Route::get('/test/asscii','TestController@asscii');
+Route::get('/test/dec','TestController@dec');
 
 
+
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
