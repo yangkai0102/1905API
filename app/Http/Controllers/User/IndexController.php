@@ -46,7 +46,7 @@ class IndexController extends Controller
     }
 
     public function decrypt1(){
-        return view('user.decryppt1');
+        return view('user.decrypt1');
     }
 
     public function decrypt2(){
