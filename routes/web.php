@@ -28,8 +28,12 @@ Route::get('/test/list','Api\TestController@userList')->middleware('filter');  /
 Route::get('/test/asscii','TestController@asscii');
 Route::get('/test/dec','TestController@dec');
 
-
-
+// 用户管理
+Route::get('/user/addkey','User\IndexController@addSSHKey1');
+Route::post('/user/addkey','User\IndexController@addSSHKey2');
+//解密数据
+Route::get('/user/decrypt/data','User\IndexController@decrypt1');
+Route::post('/user/decrypt/data','User\IndexController@decrypt2');
 
 
 Auth::routes();
