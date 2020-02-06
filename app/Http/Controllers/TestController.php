@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class TestController extends Controller
 {
@@ -118,5 +119,100 @@ class TestController extends Controller
 
         echo "解密：".$str;
 
+    }
+
+
+    public function sign1(){
+        //验证签名
+        echo '<pre>';print_r($_GET);echo "</pre>";
+
+        $sign=$_GET['sign'];
+        unset($_GET['sign']);
+
+        //将参数字典序排序
+        ksort($_GET);
+
+        echo '<pre>';print_r($_GET);echo '</pre>';
+        echo '<hr>';
+        //拼接字符串
+        $str="";
+        foreach($_GET as $k=>$v){
+            $str.=$k .'=' . $v .'&';
+        }
+        $str=rtrim($str,'&');
+        echo $str;
+        echo '</br>';
+
+        //使用公钥验签
+        $pub_key=file_get_contents(storage_path('keys/pub.key'));
+        $status=openssl_verify($str,base64_decode($sign),$pub_key,OPENSSL_ALGO_SHA256);
+        var_dump($status);
+
+        if($status){
+            echo '验签成功';
+        }else{
+            echo "验证失败";
+        }
+    }
+
+    //
+    public function sign2(){
+
+        $token_key='fdsfdsafd';
+        //接收参数
+        echo '<pre>';print_r($_GET);echo "</pre>";
+
+        $sign=$_GET['sign'];
+        echo $sign;echo "</br>";
+        unset($_GET['sign']);
+
+        ksort($_GET);
+        echo '<pre>';print_r($_GET);echo "</pre>";
+
+
+        //拼接待签名字符串
+        $str='';
+        foreach ($_GET as $k=>$v){
+            $str .= $k .'='.$v.'&';
+        }
+        $str=rtrim($str,'&');
+        echo $str;echo '</br>';
+
+        $tmp_str=$str.$token_key;
+        $sign1=md5($tmp_str);
+        echo '接收端计算的签名：'.$sign1;echo '</br>';
+
+        if($sign1===$sign){
+            echo '验签成功';
+        }else{
+            echo '验签失败';
+        }
+    }
+
+
+    //接口防刷
+    public function token1(){
+
+//        echo  11;die;
+//       用户标识
+        $token=$_SERVER['HTTP_TOKEN'];
+        //当前url
+        $request_url=$_SERVER['REQUEST_URI'];
+
+        $url_md=md5($token . $request_url);
+        $key='count:url:'.$url_md;
+
+        $count=Redis::get($key);
+        echo '当前接口访问次数为：'.$count;
+
+        if($count>=3) {
+            $time=10;
+            echo "不要勿频繁访问此接口,请在$time 秒后重试";
+            Redis::expire($key,$time);
+            die;
+        }
+        //访问数加1
+        $count=Redis::incr($key);
+        echo 'count: '.$count;
     }
 }

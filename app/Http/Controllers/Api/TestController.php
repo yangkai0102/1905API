@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Redis;
 class TestController extends Controller
 {
     //
-    public function reg(Request $request){
+    public function reg1(Request $request){
 
         $pass1=$request->input('pass1');
         $pass2=$request->input('pass2');
@@ -44,7 +44,7 @@ class TestController extends Controller
     }
 
 //登录
-    public function login(Request $request){
+    public function login1(Request $request){
         $name=$request->input('name');
         $pass=$request->input('pass');
 //        echo $pass;
@@ -83,4 +83,46 @@ class TestController extends Controller
         $res=UserModel::all();
         print_r($res->toArray());
     }
+
+    public function reg(Request $request){
+        //
+        $url='http://passport.1905.com/test/reg';
+        $response=UserModel::curlPost($url,$_POST);
+
+        return $response;
+    }
+
+    public function login(Request $request){
+        //
+        $url='http://passport.1905.com/test/login';
+        $response=UserModel::curlPost($url,$_POST);
+
+        return $response;
+    }
+
+    public function showData(){
+        $uid=$_SERVER['HTTP_UID'];
+        $token=$_SERVER['HTTP_TOKEN'];
+
+        $url='http://passport.1905.com/test/reg';
+        $response=UserModel::curlPost($url,['uid'=>$uid,'token'=>$token]);
+        $status=json_decode($response,true);
+
+        //处理鉴权结果
+        if($status['errno']==0){
+            $data='be8bbfe8b056805174aace18e1fb0cda';
+            $response=[
+                'errno'=>'ok',
+                'msg'=>'鉴权成功',
+                'data'=>$data
+            ];
+        }else{
+            $response=[
+                'errno'=>40003,
+                'msg'=>'鉴权失败'
+            ];
+        }
+        return $response;
+    }
+
 }

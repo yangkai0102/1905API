@@ -25,6 +25,9 @@ Route::post('/test/reg','Api\TestController@reg');
 Route::post('/test/login','Api\TestController@login');                          //登录
 Route::get('/test/list','Api\TestController@userList')->middleware('filter');  //用户列表
 
+Route::get('/test/showdata','Api\TestController@showData')->middleware('CheckToken');  //用户列表
+
+
 Route::get('/test/asscii','TestController@asscii');
 Route::get('/test/dec','TestController@dec');
 
@@ -39,3 +42,12 @@ Route::post('/user/decrypt/data','User\IndexController@decrypt2');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//验证签名
+Route::get('/sign1','TestController@sign1');
+//
+Route::get('/sign2','TestController@sign2');
+
+
+//测试接口防刷
+Route::get('/test/token','TestController@token1');
