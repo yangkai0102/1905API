@@ -49,5 +49,8 @@ Route::get('/sign1','TestController@sign1');
 Route::get('/sign2','TestController@sign2');
 
 
+Route::get('/test/md5test','Api\TestController@md5test');
+
+
 //测试接口防刷
 Route::get('/test/token','TestController@token1');
