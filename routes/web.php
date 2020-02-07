@@ -48,9 +48,13 @@ Route::get('/sign1','TestController@sign1');
 //
 Route::get('/sign2','TestController@sign2');
 
-
+//get签名
 Route::get('/test/md5test','Api\TestController@md5test');
+//post签名
+Route::get('/test/md5test2','Api\TestController@md5test2');
 
+//
+Route::get('/test/rsa1','Api\TestController@rsa1');
 
 //测试接口防刷
 Route::get('/test/token','TestController@token1');
