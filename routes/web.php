@@ -53,8 +53,13 @@ Route::get('/test/md5test','Api\TestController@md5test');
 //post签名
 Route::get('/test/md5test2','Api\TestController@md5test2');
 
-//
+//签名
 Route::get('/test/rsa1','Api\TestController@rsa1');
+
+//对称加密
+Route::get('/test/encrypt1','Api\TestController@encrypt');
+
+
 
 //测试接口防刷
 Route::get('/test/token','TestController@token1');

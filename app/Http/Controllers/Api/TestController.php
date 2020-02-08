@@ -190,4 +190,23 @@ class TestController extends Controller
         echo $response;
     }
 
+
+    //对称加密
+    public function encrypt(){
+        $data='hello world';
+        echo "原数据：".$data;echo "</br>";
+        $method='AES-256-CBC';
+        $key='yk';
+        $iv='vgdfvfvfrdserrbd';
+
+        $enc_data=openssl_encrypt($data,$method,$key,OPENSSL_RAW_DATA,$iv);
+        echo "加密:".$enc_data;echo "</br>";
+        $enc_data=urlencode(base64_encode($enc_data));
+
+        //发送加密数据
+        $url='http://passport.1905.com/test/decrypt1?data='.$enc_data;
+        $response=file_get_contents($url);
+        echo $response;
+
+    }
 }
