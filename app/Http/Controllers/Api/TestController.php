@@ -168,6 +168,26 @@ class TestController extends Controller
         echo $response_data;
     }
 
+    //
+    function rsa1(){
+        $data='aszx';
 
+        $path=storage_path('keys/priv.key');
+        $priv_key=openssl_pkey_get_private("file://".$path);
+        var_dump($priv_key);echo "</br>";
+        //计算签名
+        openssl_sign($data,$signature,$priv_key);
+        echo $signature;echo "</br>";
+
+        echo "<hr>";
+        openssl_free_key($priv_key);
+        //base64编码
+        $sign_str=base64_encode($signature);
+        echo "base64后的签名:".$sign_str;
+
+        $url='http://passport.1905.com/test/rsa2?data='.$sign_str;
+        $response=file_get_contents($url);
+        echo $response;
+    }
 
 }
