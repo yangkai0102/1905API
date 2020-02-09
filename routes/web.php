@@ -58,7 +58,8 @@ Route::get('/test/rsa1','Api\TestController@rsa1');
 
 //对称加密
 Route::get('/test/encrypt1','Api\TestController@encrypt');
-
+//非对称加密
+Route::get('/test/rsa2','Api\TestController@rsa2');
 
 
 //测试接口防刷

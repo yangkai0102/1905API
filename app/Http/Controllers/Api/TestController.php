@@ -207,6 +207,25 @@ class TestController extends Controller
         $url='http://passport.1905.com/test/decrypt1?data='.$enc_data;
         $response=file_get_contents($url);
         echo $response;
+    }
+
+    //非对称加密
+    public function rsa2(){
+        $data='yangkai';
+        //获取私钥路径
+        $path=storage_path('keys/priv.key');
+        //私钥资源
+        $priv_key=openssl_pkey_get_private("file://".$path);
+        //给数据私钥加密
+        openssl_private_encrypt($data,$enc_data,$priv_key);
+        echo $enc_data;echo "</br>";
+        //加密的数据base64转译
+        $enc_data=urlencode(base64_encode($enc_data));
+        echo "base64加密：".$enc_data;echo "</br>";
+        //发送数据
+        $url='http://passport.1905.com/test/rsa2?data='.$enc_data;
+        $response=file_get_contents($url);
+        echo $response;
 
     }
 }
